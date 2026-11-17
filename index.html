@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0F0F0F">
 <title>Ducati Uzbekistan — в наличии</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&subset=cyrillic,latin&display=swap" rel="stylesheet">
 <style>
@@ -651,6 +652,15 @@ document.addEventListener("click", e => {
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
 window.addEventListener("hashchange", () => { route(); window.scrollTo({top: document.querySelector(".tabs").offsetTop - 60, behavior:"smooth"}); });
 
+// Telegram Mini App
+const TGA = window.Telegram && Telegram.WebApp && Telegram.WebApp.initData !== undefined && Telegram.WebApp.platform !== "unknown" ? Telegram.WebApp : null;
+if (TGA){
+  try{ TGA.ready(); TGA.expand(); TGA.setHeaderColor("#0F0F0F"); TGA.setBackgroundColor("#0F0F0F"); }catch(_){}
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="https://t.me/"]');
+    if (a){ e.preventDefault(); try{ TGA.openTelegramLink(a.href); }catch(_){ location.href = a.href; } }
+  }, true);
+}
 (function init(){
   let saved = null; try{ saved = localStorage.getItem("dl"); }catch(_){}
   const nav = (navigator.language||"ru").slice(0,2);

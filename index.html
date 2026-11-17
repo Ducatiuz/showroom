@@ -245,7 +245,7 @@ body.lock{overflow:hidden}
       <p data-t="oText"></p>
     </div>
     <div id="orderList"></div>
-    <div style="margin-top:22px"><a class="btn red" href="https://t.me/ducatiuz_sales" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.6.2 1.4 1.5z"/></svg><span data-t="oCta"></span></a></div>
+    <div style="margin-top:22px"><a class="btn red" id="lnkOrder" href="https://t.me/ducatiuz_sales" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.6.2 1.4 1.5z"/></svg><span data-t="oCta"></span></a></div>
   </section>
 
   <section class="view" id="v-gear">
@@ -255,7 +255,7 @@ body.lock{overflow:hidden}
       <p data-t="gText"></p>
     </div>
     <div class="fam" id="gearCats"></div>
-    <div style="margin-top:22px"><a class="btn red" href="https://t.me/ducatiuz_sales" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.6.2 1.4 1.5z"/></svg><span data-t="gCta"></span></a></div>
+    <div style="margin-top:22px"><a class="btn red" id="lnkGear" href="https://t.me/ducatiuz_sales" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.6.2 1.4 1.5z"/></svg><span data-t="gCta"></span></a></div>
   </section>
 </main>
 
@@ -463,7 +463,7 @@ const T = {
   u_power:"л.с.",u_torque:"Н·м",u_displacement:"см³",u_weight:"кг",u_tank:"л",
   req:"Цена по запросу",save:"Выгода {v}",exhaust:"Выхлоп Termignoni уже в цене",
   wantTg:"Написать в Telegram",call:"Позвонить",test:"Тест-драйв",reserve:"Забронировать",
-  msgTest:"тест-драйв",
+  msgBike:"Здравствуйте! Интересует {b} из каталога.",msgTestd:"Здравствуйте! Хочу записаться на тест-драйв {b}.",msgRes:"Здравствуйте! Хочу забронировать {b}.",msgOrder:"Здравствуйте! Хочу узнать цену и сроки поставки Ducati под заказ.",msgGear:"Здравствуйте! Хочу узнать о наличии экипировки.",priceL:"Цена",
   oKick:"Ducati · Scrambler",oTitle:"Любой Ducati под заказ",
   oText:"Вся линейка Ducati и Scrambler с поставкой с завода. Прайс на заказ скоро появится здесь, а пока менеджер рассчитает стоимость и сроки поставки.",
   oCta:"Узнать цену под заказ",showPrice:"Показать цену",soon:"Прайс скоро",lead:"Срок поставки",
@@ -485,7 +485,7 @@ const T = {
   u_power:"o.k.",u_torque:"N·m",u_displacement:"sm³",u_weight:"kg",u_tank:"l",
   req:"Narxi so‘rov bo‘yicha",save:"Foyda {v}",exhaust:"Termignoni chiqarish tizimi narxga kiritilgan",
   wantTg:"Telegramda yozish",call:"Qo‘ng‘iroq",test:"Test-drayv",reserve:"Band qilish",
-  msgTest:"test-drayv",
+  msgBike:"Assalomu alaykum! Katalogdagi {b} qiziqtiradi.",msgTestd:"Assalomu alaykum! {b} test-drayviga yozilmoqchiman.",msgRes:"Assalomu alaykum! {b} ni band qilmoqchiman.",msgOrder:"Assalomu alaykum! Buyurtma asosidagi Ducati narxi va yetkazish muddatini bilmoqchiman.",msgGear:"Assalomu alaykum! Ekipirovka mavjudligini bilmoqchiman.",priceL:"Narxi",
   oKick:"Ducati · Scrambler",oTitle:"Istalgan Ducati buyurtmaga",
   oText:"Ducati va Scrambler’ning butun modellar qatori zavoddan yetkaziladi. Buyurtma narxlari tez orada shu yerda paydo bo‘ladi, hozircha menejer narx va yetkazish muddatini hisoblab beradi.",
   oCta:"Buyurtma narxini bilish",showPrice:"Narxni ko‘rsatish",soon:"Narxlar tez orada",lead:"Yetkazish muddati",
@@ -507,7 +507,7 @@ const T = {
   u_power:"hp",u_torque:"Nm",u_displacement:"cc",u_weight:"kg",u_tank:"L",
   req:"Price on request",save:"Save {v}",exhaust:"Termignoni exhaust included in the price",
   wantTg:"Message on Telegram",call:"Call",test:"Test ride",reserve:"Reserve",
-  msgTest:"test ride",
+  msgBike:"Hello! I'm interested in {b} from your catalogue.",msgTestd:"Hello! I'd like to book a test ride on {b}.",msgRes:"Hello! I'd like to reserve {b}.",msgOrder:"Hello! I'd like a quote and delivery time for a Ducati to order.",msgGear:"Hello! I'd like to ask about apparel availability.",priceL:"Price",
   oKick:"Ducati · Scrambler",oTitle:"Any Ducati, made to order",
   oText:"The full Ducati and Scrambler range, delivered from the factory. Order prices will appear here soon — meanwhile our manager will quote the price and delivery time.",
   oCta:"Get an order quote",showPrice:"Show price",soon:"Prices coming soon",lead:"Delivery time",
@@ -541,6 +541,14 @@ function visual(b, big){
 const specOrder = ["power","torque","displacement","weight","tank","seat"];
 function specList(b){ return specOrder.filter(k => b.specs[k] != null); }
 
+const tgLink = text => TG_URL + "?text=" + encodeURIComponent(text);
+function bikeLabel(b){
+  const d = [];
+  if (b.color) d.push(b.color[L]);
+  if (b.year) d.push(b.year);
+  let s = b.name + (d.length ? " (" + d.join(", ") + ")" : "");
+  return s;
+}
 function metaLine(b, long){
   const parts = [];
   if (b.color) parts.push(`<span class="sw"></span>${esc(b.color[L])}`);
@@ -609,10 +617,10 @@ function openSheet(id){
       <div class="pbox">${price}</div>
       ${b.exhaustIncluded?`<div class="note">${t("exhaust")}</div>`:""}
       <div class="ctas">
-        <a class="btn red" href="${TG_URL}" target="_blank" rel="noopener">${ICON_TG}${t("wantTg")}</a>
+        <a class="btn red" href="${tgLink(t("msgBike").replace("{b}", bikeLabel(b)) + (b.price ? " " + t("priceL") + ": " + money(b.price) + "." : ""))}" target="_blank" rel="noopener">${ICON_TG}${t("wantTg")}</a>
         <div class="row">
           <a class="btn ghostb" href="${PHONE_HREF}">${ICON_PH}${t("call")}</a>
-          <a class="btn ghostb" href="${TG_URL}" target="_blank" rel="noopener">${second}</a>
+          <a class="btn ghostb" href="${tgLink(t(b.status === "transit" ? "msgRes" : "msgTestd").replace("{b}", bikeLabel(b)))}" target="_blank" rel="noopener">${second}</a>
         </div>
       </div>
       <div class="phone">${PHONE} · @ducatiuz_sales</div>
@@ -634,6 +642,8 @@ function applyLang(){
   $("#tCount").textContent = STOCK.length;
   document.title = "Ducati Uzbekistan — " + t("tStock");
   renderStock(); renderOrder(); renderGear();
+  $("#lnkOrder").href = tgLink(t("msgOrder"));
+  $("#lnkGear").href = tgLink(t("msgGear"));
 }
 function route(){
   const h = (location.hash || "#stock").slice(1);

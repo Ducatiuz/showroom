@@ -153,6 +153,20 @@ html[lang="ru"] .intro h2{font-family:'Montserrat',sans-serif;font-weight:800;le
 .btn.ghostb:hover{border-color:#fff}
 .btn svg{flex:none}
 
+/* ---------- order ---------- */
+.ocard{cursor:default}
+.ocard:active{transform:none}
+.ocard .vis{aspect-ratio:16/7}
+@media(min-width:700px){.ocard .vis{aspect-ratio:16/10}}
+.ocard .vis.has-img{aspect-ratio:16/9}
+.ocard .ghost{font-size:clamp(48px,14vw,90px)}
+@media(min-width:700px){.ocard .ghost{font-size:clamp(56px,8vw,100px)}}
+.oprice{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:66px}
+.oprice .reveal{margin:0}
+.oprice .shown{font-family:'DSX',sans-serif;font-weight:700;font-size:24px;line-height:1;animation:fade .45s var(--ease)}
+.oprice .shown small{display:block;font-family:'DS','Montserrat',sans-serif;font-weight:400;font-size:11px;color:var(--fg);margin-top:6px;letter-spacing:.04em}
+.obuy{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;padding:11px 14px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;animation:fade .45s var(--ease)}
+.obuy:hover{background:var(--red-d)}
 /* ---------- gear ---------- */
 .ggrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 @media(min-width:700px){.ggrid{grid-template-columns:repeat(3,1fr);gap:16px}}
@@ -251,7 +265,7 @@ body.lock{overflow:hidden}
 <nav class="tabs">
   <div class="wrap">
     <a class="tab" href="#stock" data-v="stock"><span data-t="tStock"></span><sup id="tCount"></sup></a>
-    <a class="tab" href="#order" data-v="order"><span data-t="tOrder"></span></a>
+    <a class="tab" href="#order" data-v="order"><span data-t="tOrder"></span><sup id="oCount"></sup></a>
     <a class="tab" href="#gear" data-v="gear"><span data-t="tGear"></span><sup id="gCount"></sup></a>
   </div>
 </nav>
@@ -268,6 +282,7 @@ body.lock{overflow:hidden}
       <h2 data-t="oTitle" style="margin-top:14px"></h2>
       <p data-t="oText"></p>
     </div>
+    <div class="chips" id="ochips"></div>
     <div id="orderList"></div>
     <div style="margin-top:22px"><a class="btn red" id="lnkOrder" href="https://t.me/ducatiuz_sales" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.6.2 1.4 1.5z"/></svg><span data-t="oCta"></span></a></div>
   </section>
@@ -465,8 +480,911 @@ const STOCK = [
   }
 ];
 
-// Под заказ: { family, name, segment, price, leadTime: {ru,uz,en} }
-const ORDER = [];
+// Под заказ: линейка 2027 MY. price — розничная цена с НДС, $, рассчитана по калькуляции дистрибьютора.
+const ORDER = [
+ {
+  "id": "o4",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V2",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 26339,
+  "img": ""
+ },
+ {
+  "id": "o5",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V2 S",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 29429,
+  "img": ""
+ },
+ {
+  "id": "o6",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V2 S",
+  "trim": null,
+  "color": "Sport Livery",
+  "price": 29974,
+  "img": ""
+ },
+ {
+  "id": "o7",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V2 S",
+  "trim": "Travel",
+  "color": "Ducati Red",
+  "price": 30701,
+  "img": ""
+ },
+ {
+  "id": "o8",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V2 S",
+  "trim": "Travel",
+  "color": "Sport Livery",
+  "price": 31246,
+  "img": ""
+ },
+ {
+  "id": "o9",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V4",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 31610,
+  "img": ""
+ },
+ {
+  "id": "o10",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V4 S",
+  "trim": "Essential",
+  "color": "Ducati Red",
+  "price": 36154,
+  "img": ""
+ },
+ {
+  "id": "o11",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V4 Rally",
+  "trim": "Radar",
+  "color": "Red",
+  "price": 41843,
+  "img": "img/multistrada-v4-rally.jpg"
+ },
+ {
+  "id": "o12",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V4 RS",
+  "trim": null,
+  "color": "RS Livery",
+  "price": 56566,
+  "img": ""
+ },
+ {
+  "id": "o13",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V4 RS Lamborghini",
+  "trim": null,
+  "color": "Lamborghini Livery",
+  "price": 97909,
+  "img": ""
+ },
+ {
+  "id": "o14",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V4 RS Lamborghini Speciale Clienti",
+  "trim": null,
+  "color": "Lamborghini Livery",
+  "price": 130480,
+  "img": ""
+ },
+ {
+  "id": "o15",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V4 Grand Tour",
+  "trim": null,
+  "color": "Grand Tour Livery",
+  "price": 40752,
+  "img": ""
+ },
+ {
+  "id": "o16",
+  "fam": "multistrada",
+  "ghost": "MULTISTRADA",
+  "hex": "#CC0000",
+  "name": "Multistrada V4 Pikes Peak",
+  "trim": null,
+  "color": "Pikes Peak Livery",
+  "price": 45115,
+  "img": ""
+ },
+ {
+  "id": "o17",
+  "fam": "desertx",
+  "ghost": "DESERTX",
+  "hex": "#BFB8A8",
+  "name": "DesertX",
+  "trim": null,
+  "color": "Matt Star White Silk",
+  "price": 27974,
+  "img": "img/desertx.jpg"
+ },
+ {
+  "id": "o18",
+  "fam": "desertx",
+  "ghost": "DESERTX",
+  "hex": "#BFB8A8",
+  "name": "DesertX Rally",
+  "trim": null,
+  "color": "Livery",
+  "price": 31792,
+  "img": ""
+ },
+ {
+  "id": "o19",
+  "fam": "hypermotard",
+  "ghost": "HYPERMOTARD",
+  "hex": "#CC0000",
+  "name": "Hypermotard V2",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 24157,
+  "img": "img/hypermotard-v2.jpg"
+ },
+ {
+  "id": "o20",
+  "fam": "hypermotard",
+  "ghost": "HYPERMOTARD",
+  "hex": "#CC0000",
+  "name": "Hypermotard V2 RVE",
+  "trim": null,
+  "color": "RVE Livery",
+  "price": 25430,
+  "img": ""
+ },
+ {
+  "id": "o21",
+  "fam": "hypermotard",
+  "ghost": "HYPERMOTARD",
+  "hex": "#CC0000",
+  "name": "Hypermotard V2 SP",
+  "trim": null,
+  "color": "SP Livery",
+  "price": 30883,
+  "img": ""
+ },
+ {
+  "id": "o22",
+  "fam": "hypermotard",
+  "ghost": "HYPERMOTARD",
+  "hex": "#CC0000",
+  "name": "Hypermotard 698 Mono",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 21613,
+  "img": ""
+ },
+ {
+  "id": "o23",
+  "fam": "hypermotard",
+  "ghost": "HYPERMOTARD",
+  "hex": "#CC0000",
+  "name": "Hypermotard 698 Mono Nera",
+  "trim": null,
+  "color": "Thrilling Black",
+  "price": 22158,
+  "img": ""
+ },
+ {
+  "id": "o24",
+  "fam": "hypermotard",
+  "ghost": "HYPERMOTARD",
+  "hex": "#CC0000",
+  "name": "Hypermotard 698 Mono RVE",
+  "trim": null,
+  "color": "Graffiti Livery",
+  "price": 23249,
+  "img": ""
+ },
+ {
+  "id": "o25",
+  "fam": "streetfighter",
+  "ghost": "STREETFIGHTER",
+  "hex": "#CC0000",
+  "name": "Streetfighter V2",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 23976,
+  "img": ""
+ },
+ {
+  "id": "o26",
+  "fam": "streetfighter",
+  "ghost": "STREETFIGHTER",
+  "hex": "#CC0000",
+  "name": "Streetfighter V2 S",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 26520,
+  "img": ""
+ },
+ {
+  "id": "o27",
+  "fam": "streetfighter",
+  "ghost": "STREETFIGHTER",
+  "hex": "#CC0000",
+  "name": "Streetfighter V2 S",
+  "trim": null,
+  "color": "Ducati Yellow",
+  "price": 26884,
+  "img": ""
+ },
+ {
+  "id": "o28",
+  "fam": "streetfighter",
+  "ghost": "STREETFIGHTER",
+  "hex": "#CC0000",
+  "name": "Streetfighter V4",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 37063,
+  "img": ""
+ },
+ {
+  "id": "o29",
+  "fam": "streetfighter",
+  "ghost": "STREETFIGHTER",
+  "hex": "#CC0000",
+  "name": "Streetfighter V4 S",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 42934,
+  "img": ""
+ },
+ {
+  "id": "o30",
+  "fam": "streetfighter",
+  "ghost": "STREETFIGHTER",
+  "hex": "#CC0000",
+  "name": "Streetfighter V4 SP",
+  "trim": null,
+  "color": "SP Livery",
+  "price": 54021,
+  "img": ""
+ },
+ {
+  "id": "o31",
+  "fam": "streetfighter",
+  "ghost": "STREETFIGHTER",
+  "hex": "#CC0000",
+  "name": "Streetfighter V4 S Corse",
+  "trim": null,
+  "color": "Corse Livery",
+  "price": 45660,
+  "img": ""
+ },
+ {
+  "id": "o32",
+  "fam": "monster",
+  "ghost": "MONSTER",
+  "hex": "#CC0000",
+  "name": "Monster Dark",
+  "trim": null,
+  "color": "Dark Stealth",
+  "price": 18859,
+  "img": ""
+ },
+ {
+  "id": "o33",
+  "fam": "monster",
+  "ghost": "MONSTER",
+  "hex": "#CC0000",
+  "name": "Monster",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 20159,
+  "img": ""
+ },
+ {
+  "id": "o34",
+  "fam": "monster",
+  "ghost": "MONSTER",
+  "hex": "#CC0000",
+  "name": "Monster",
+  "trim": null,
+  "color": "Iceberg White",
+  "price": 20386,
+  "img": ""
+ },
+ {
+  "id": "o35",
+  "fam": "monster",
+  "ghost": "MONSTER",
+  "hex": "#CC0000",
+  "name": "Monster",
+  "trim": null,
+  "color": "Sport Livery",
+  "price": 20704,
+  "img": ""
+ },
+ {
+  "id": "o36",
+  "fam": "monster",
+  "ghost": "MONSTER",
+  "hex": "#CC0000",
+  "name": "Monster+",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 20704,
+  "img": ""
+ },
+ {
+  "id": "o37",
+  "fam": "monster",
+  "ghost": "MONSTER",
+  "hex": "#CC0000",
+  "name": "Monster+",
+  "trim": null,
+  "color": "Iceberg White",
+  "price": 20931,
+  "img": ""
+ },
+ {
+  "id": "o38",
+  "fam": "monster",
+  "ghost": "MONSTER",
+  "hex": "#CC0000",
+  "name": "Monster+",
+  "trim": null,
+  "color": "Sport Livery",
+  "price": 21249,
+  "img": ""
+ },
+ {
+  "id": "o39",
+  "fam": "scrambler",
+  "ghost": "SCRAMBLER",
+  "hex": "#E0A800",
+  "name": "Scrambler Icon Dark",
+  "trim": null,
+  "color": "Dark Stealth",
+  "price": 16860,
+  "img": "img/scrambler-black.jpg"
+ },
+ {
+  "id": "o40",
+  "fam": "scrambler",
+  "ghost": "SCRAMBLER",
+  "hex": "#E0A800",
+  "name": "Scrambler Icon",
+  "trim": null,
+  "color": "Red",
+  "price": 17950,
+  "img": ""
+ },
+ {
+  "id": "o41",
+  "fam": "scrambler",
+  "ghost": "SCRAMBLER",
+  "hex": "#E0A800",
+  "name": "Scrambler Icon",
+  "trim": null,
+  "color": "62 Yellow",
+  "price": 17950,
+  "img": ""
+ },
+ {
+  "id": "o42",
+  "fam": "scrambler",
+  "ghost": "SCRAMBLER",
+  "hex": "#E0A800",
+  "name": "Scrambler Icon",
+  "trim": null,
+  "color": "Livery",
+  "price": 17950,
+  "img": ""
+ },
+ {
+  "id": "o43",
+  "fam": "scrambler",
+  "ghost": "SCRAMBLER",
+  "hex": "#E0A800",
+  "name": "Scrambler Icon Naked version",
+  "trim": null,
+  "color": "Naked",
+  "price": 17768,
+  "img": ""
+ },
+ {
+  "id": "o44",
+  "fam": "scrambler",
+  "ghost": "SCRAMBLER",
+  "hex": "#E0A800",
+  "name": "Scrambler Nightshift",
+  "trim": null,
+  "color": "Emerald Green",
+  "price": 19431,
+  "img": ""
+ },
+ {
+  "id": "o45",
+  "fam": "scrambler",
+  "ghost": "SCRAMBLER",
+  "hex": "#E0A800",
+  "name": "Scrambler Full Throttle",
+  "trim": null,
+  "color": "Storm Green/Dark Gold",
+  "price": 19431,
+  "img": ""
+ },
+ {
+  "id": "o46",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V4",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 43115,
+  "img": ""
+ },
+ {
+  "id": "o47",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V4 S",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 53476,
+  "img": ""
+ },
+ {
+  "id": "o48",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V4 S",
+  "trim": null,
+  "color": "Livery",
+  "price": 55657,
+  "img": ""
+ },
+ {
+  "id": "o49",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V4 SP",
+  "trim": null,
+  "color": "Winter Test Livery",
+  "price": 63292,
+  "img": ""
+ },
+ {
+  "id": "o50",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V4 R",
+  "trim": null,
+  "color": "R Livery",
+  "price": 79187,
+  "img": ""
+ },
+ {
+  "id": "o51",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V4 2025 MotoGP Replica",
+  "trim": null,
+  "color": "Livery",
+  "price": 145022,
+  "img": ""
+ },
+ {
+  "id": "o52",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V2",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 25793,
+  "img": ""
+ },
+ {
+  "id": "o53",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V2 S",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 28338,
+  "img": ""
+ },
+ {
+  "id": "o54",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V2 S",
+  "trim": null,
+  "color": "Ducati Yellow",
+  "price": 28702,
+  "img": "img/panigale-v2s.jpg"
+ },
+ {
+  "id": "o55",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V2 SP",
+  "trim": null,
+  "color": "Livery",
+  "price": 30701,
+  "img": ""
+ },
+ {
+  "id": "o56",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V2 MM93",
+  "trim": null,
+  "color": "Mark Celebrative Livery",
+  "price": 31973,
+  "img": ""
+ },
+ {
+  "id": "o57",
+  "fam": "panigale",
+  "ghost": "PANIGALE",
+  "hex": "#CC0000",
+  "name": "Panigale V2 FB63",
+  "trim": null,
+  "color": "Pecco Celebrative Livery",
+  "price": 31973,
+  "img": ""
+ },
+ {
+  "id": "o58",
+  "fam": "diavel",
+  "ghost": "DIAVEL",
+  "hex": "#8A0F14",
+  "name": "Diavel V4",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 40752,
+  "img": ""
+ },
+ {
+  "id": "o59",
+  "fam": "diavel",
+  "ghost": "DIAVEL",
+  "hex": "#8A0F14",
+  "name": "Diavel V4",
+  "trim": null,
+  "color": "Black Roadster Livery",
+  "price": 41116,
+  "img": ""
+ },
+ {
+  "id": "o60",
+  "fam": "diavel",
+  "ghost": "DIAVEL",
+  "hex": "#8A0F14",
+  "name": "Diavel V4 S",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 44751,
+  "img": ""
+ },
+ {
+  "id": "o61",
+  "fam": "diavel",
+  "ghost": "DIAVEL",
+  "hex": "#8A0F14",
+  "name": "Diavel V4 S",
+  "trim": null,
+  "color": "Livery",
+  "price": 46933,
+  "img": ""
+ },
+ {
+  "id": "o62",
+  "fam": "diavel",
+  "ghost": "DIAVEL",
+  "hex": "#8A0F14",
+  "name": "Diavel V4 RS",
+  "trim": null,
+  "color": "RS Livery",
+  "price": 55294,
+  "img": ""
+ },
+ {
+  "id": "o63",
+  "fam": "diavel",
+  "ghost": "DIAVEL",
+  "hex": "#8A0F14",
+  "name": "XDiavel V4",
+  "trim": null,
+  "color": "Burning Red",
+  "price": 42934,
+  "img": "img/xdiavel-v4-red.jpg"
+ },
+ {
+  "id": "o64",
+  "fam": "diavel",
+  "ghost": "DIAVEL",
+  "hex": "#8A0F14",
+  "name": "XDiavel V4",
+  "trim": null,
+  "color": "Black Edition",
+  "price": 43297,
+  "img": ""
+ },
+ {
+  "id": "o65",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Superleggera V4 Centenario",
+  "trim": null,
+  "color": "GP26 Rosso Centenario",
+  "price": 239920,
+  "img": ""
+ },
+ {
+  "id": "o66",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Superleggera V4 Centenario Tricolore",
+  "trim": null,
+  "color": "750 F1 #618",
+  "price": 294450,
+  "img": ""
+ },
+ {
+  "id": "o67",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Panigale V2 S Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 57475,
+  "img": ""
+ },
+ {
+  "id": "o68",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "XDiavel V4 Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 102998,
+  "img": ""
+ },
+ {
+  "id": "o69",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Multistrada V4 RS Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 102998,
+  "img": ""
+ },
+ {
+  "id": "o70",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "DesertX Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 48387,
+  "img": ""
+ },
+ {
+  "id": "o71",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Panigale V4 S Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 148657,
+  "img": ""
+ },
+ {
+  "id": "o72",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Streetfighter V4 S Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 102998,
+  "img": ""
+ },
+ {
+  "id": "o73",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Monster Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 39298,
+  "img": ""
+ },
+ {
+  "id": "o74",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Diavel V4 RS Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 102998,
+  "img": ""
+ },
+ {
+  "id": "o75",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Hypermotard V2 SP Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 44751,
+  "img": ""
+ },
+ {
+  "id": "o76",
+  "fam": "centenario",
+  "ghost": "CENTENARIO",
+  "hex": "#B08D57",
+  "name": "Scrambler 800 Nightshift Centenario",
+  "trim": null,
+  "color": "Centenario Livery",
+  "price": 37426,
+  "img": ""
+ },
+ {
+  "id": "o77",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo250MX",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 19431,
+  "img": ""
+ },
+ {
+  "id": "o78",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo250MX Factory",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 21976,
+  "img": ""
+ },
+ {
+  "id": "o79",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo250EDX",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 19977,
+  "img": ""
+ },
+ {
+  "id": "o80",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo450EDS",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 21049,
+  "img": ""
+ },
+ {
+  "id": "o81",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo450SM",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 22340,
+  "img": ""
+ },
+ {
+  "id": "o82",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo450MX",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 20886,
+  "img": ""
+ },
+ {
+  "id": "o83",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo450MX Factory",
+  "trim": null,
+  "color": "Racing Livery",
+  "price": 23976,
+  "img": ""
+ },
+ {
+  "id": "o84",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo450EDX",
+  "trim": null,
+  "color": "Ducati Red",
+  "price": 21976,
+  "img": ""
+ },
+ {
+  "id": "o94",
+  "fam": "offroad",
+  "ghost": "DESMO",
+  "hex": "#CC0000",
+  "name": "Desmo250EDS",
+  "trim": null,
+  "color": null,
+  "price": 20522,
+  "img": ""
+ }
+];
 // Экипировка: цена — розничная, sale — со скидкой 15%. Суммы в сумах.
 const GEAR = [
  {
@@ -859,7 +1777,7 @@ const ICON_PH = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" str
 const ICON_AR = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
 const T = {
- ru:{gcats:{all:"Все",helmets:"Шлемы",jackets:"Куртки",suits:"Комбинезоны",pants:"Брюки и джинсы",boots:"Обувь",gloves:"Перчатки",mx:"Off-Road"},gtags:{leather:"Кожа",textile:"Текстиль",perf:"Перфорация",lady:"Женская модель",men:"Мужская модель",gtx:"GORE-TEX",wp:"Водонепроницаемые",ece:"ECE 22.06"},cur:"сум",sizeL:"Размер",sizesAsk:"Наличие размеров уточняйте у менеджера",art:"Артикул",msgItem:"Здравствуйте! Интересует {b} (арт. {a}) из каталога.",gearOff:"скидка на экипировку",kicker:"Tashkent City · Осенние цены",h1a:"Ducati",h1b:"в наличии",
+ ru:{ofam:{all:"Все",panigale:"Panigale",streetfighter:"Streetfighter",monster:"Monster",multistrada:"Multistrada",desertx:"DesertX",diavel:"Diavel / XDiavel",hypermotard:"Hypermotard",scrambler:"Scrambler",offroad:"Off-Road",centenario:"Centenario"},order:"Заказать",vatIncl:"с НДС · под заказ",msgOrd:"Здравствуйте! Хочу заказать {b}. Цена из каталога: {p}.",gcats:{all:"Все",helmets:"Шлемы",jackets:"Куртки",suits:"Комбинезоны",pants:"Брюки и джинсы",boots:"Обувь",gloves:"Перчатки",mx:"Off-Road"},gtags:{leather:"Кожа",textile:"Текстиль",perf:"Перфорация",lady:"Женская модель",men:"Мужская модель",gtx:"GORE-TEX",wp:"Водонепроницаемые",ece:"ECE 22.06"},cur:"сум",sizeL:"Размер",sizesAsk:"Наличие размеров уточняйте у менеджера",art:"Артикул",msgItem:"Здравствуйте! Интересует {b} (арт. {a}) из каталога.",gearOff:"скидка на экипировку",kicker:"Tashkent City · Осенние цены",h1a:"Ducati",h1b:"в наличии",
   sub:"Скидки до {n}% на мотоциклы в салоне. Выберите свой Ducati и заберите уже сегодня.",
   sBikes:"байков в наличии",sOff:"осенняя скидка",sHours:"ждём в салоне",
   tStock:"В наличии",tOrder:"Под заказ",tGear:"Экипировка",
@@ -871,7 +1789,7 @@ const T = {
   wantTg:"Написать в Telegram",call:"Позвонить",test:"Тест-драйв",reserve:"Забронировать",
   msgBike:"Здравствуйте! Интересует {b} из каталога.",msgTestd:"Здравствуйте! Хочу записаться на тест-драйв {b}.",msgRes:"Здравствуйте! Хочу забронировать {b}.",msgOrder:"Здравствуйте! Хочу узнать цену и сроки поставки Ducati под заказ.",msgGear:"Здравствуйте! Хочу узнать о наличии экипировки.",priceL:"Цена",
   oKick:"Ducati · Scrambler",oTitle:"Любой Ducati под заказ",
-  oText:"Вся линейка Ducati и Scrambler с поставкой с завода. Прайс на заказ скоро появится здесь, а пока менеджер рассчитает стоимость и сроки поставки.",
+  oText:"Вся линейка Ducati 2027 модельного года с поставкой с завода. Нажмите «Показать цену», чтобы узнать стоимость. Сроки поставки подскажет менеджер.",
   oCta:"Узнать цену под заказ",showPrice:"Показать цену",soon:"Прайс скоро",lead:"Срок поставки",
   gKick:"Ducati Apparel",gTitle:"Экипировка Ducati",
   gText:"Оригинальная экипировка Ducati в наличии в салоне. Сейчас на всю экипировку действует скидка 15%.",
@@ -881,7 +1799,7 @@ const T = {
   addr:"Ташкент, Шайхантахурский р-н, ул. Заргар, 4",hours:"Часы работы: 10:00–20:00",map:"Открыть на карте →",
   fine:"Цены на мотоциклы указаны в долларах США с НДС, на экипировку в сумах. Осеннее предложение действует до окончания стока. Характеристики указаны по данным Ducati. Изображения носят иллюстративный характер.",
   year:"модельный год"},
- uz:{gcats:{all:"Barchasi",helmets:"Dubulg‘alar",jackets:"Kurtkalar",suits:"Kombinezonlar",pants:"Shim va jinsilar",boots:"Poyabzal",gloves:"Qo‘lqoplar",mx:"Off-Road"},gtags:{leather:"Charm",textile:"Tekstil",perf:"Perforatsiya",lady:"Ayollar modeli",men:"Erkaklar modeli",gtx:"GORE-TEX",wp:"Suv o‘tkazmaydi",ece:"ECE 22.06"},cur:"so‘m",sizeL:"O‘lcham",sizesAsk:"O‘lchamlar mavjudligini menejerdan so‘rang",art:"Artikul",msgItem:"Assalomu alaykum! Katalogdagi {b} (art. {a}) qiziqtiradi.",gearOff:"ekipirovkaga chegirma",kicker:"Tashkent City · Kuzgi narxlar",h1a:"Ducati",h1b:"mavjud",
+ uz:{ofam:{all:"Barchasi",panigale:"Panigale",streetfighter:"Streetfighter",monster:"Monster",multistrada:"Multistrada",desertx:"DesertX",diavel:"Diavel / XDiavel",hypermotard:"Hypermotard",scrambler:"Scrambler",offroad:"Off-Road",centenario:"Centenario"},order:"Buyurtma",vatIncl:"QQS bilan · buyurtmaga",msgOrd:"Assalomu alaykum! {b} buyurtma qilmoqchiman. Katalogdagi narx: {p}.",gcats:{all:"Barchasi",helmets:"Dubulg‘alar",jackets:"Kurtkalar",suits:"Kombinezonlar",pants:"Shim va jinsilar",boots:"Poyabzal",gloves:"Qo‘lqoplar",mx:"Off-Road"},gtags:{leather:"Charm",textile:"Tekstil",perf:"Perforatsiya",lady:"Ayollar modeli",men:"Erkaklar modeli",gtx:"GORE-TEX",wp:"Suv o‘tkazmaydi",ece:"ECE 22.06"},cur:"so‘m",sizeL:"O‘lcham",sizesAsk:"O‘lchamlar mavjudligini menejerdan so‘rang",art:"Artikul",msgItem:"Assalomu alaykum! Katalogdagi {b} (art. {a}) qiziqtiradi.",gearOff:"ekipirovkaga chegirma",kicker:"Tashkent City · Kuzgi narxlar",h1a:"Ducati",h1b:"mavjud",
   sub:"Salonimizdagi mototsikllarga {n}% gacha chegirma. O‘z Ducati’ingizni tanlang va bugunoq olib keting.",
   sBikes:"ta mototsikl mavjud",sOff:"kuzgi chegirma",sHours:"salonda kutamiz",
   tStock:"Mavjud",tOrder:"Buyurtmaga",tGear:"Ekipirovka",
@@ -893,7 +1811,7 @@ const T = {
   wantTg:"Telegramda yozish",call:"Qo‘ng‘iroq",test:"Test-drayv",reserve:"Band qilish",
   msgBike:"Assalomu alaykum! Katalogdagi {b} qiziqtiradi.",msgTestd:"Assalomu alaykum! {b} test-drayviga yozilmoqchiman.",msgRes:"Assalomu alaykum! {b} ni band qilmoqchiman.",msgOrder:"Assalomu alaykum! Buyurtma asosidagi Ducati narxi va yetkazish muddatini bilmoqchiman.",msgGear:"Assalomu alaykum! Ekipirovka mavjudligini bilmoqchiman.",priceL:"Narxi",
   oKick:"Ducati · Scrambler",oTitle:"Istalgan Ducati buyurtmaga",
-  oText:"Ducati va Scrambler’ning butun modellar qatori zavoddan yetkaziladi. Buyurtma narxlari tez orada shu yerda paydo bo‘ladi, hozircha menejer narx va yetkazish muddatini hisoblab beradi.",
+  oText:"2027 model yilidagi butun Ducati qatori zavoddan yetkaziladi. Narxni bilish uchun «Narxni ko‘rsatish» tugmasini bosing. Yetkazish muddatini menejer aytib beradi.",
   oCta:"Buyurtma narxini bilish",showPrice:"Narxni ko‘rsatish",soon:"Narxlar tez orada",lead:"Yetkazish muddati",
   gKick:"Ducati Apparel",gTitle:"Ducati ekipirovkasi",
   gText:"Salonda mavjud original Ducati ekipirovkasi. Hozir barcha ekipirovkaga 15% chegirma.",
@@ -903,7 +1821,7 @@ const T = {
   addr:"Toshkent, Shayxontohur tumani, Zargar ko‘chasi, 4",hours:"Ish vaqti: 10:00–20:00",map:"Xaritada ochish →",
   fine:"Mototsikl narxlari AQSh dollarida QQS bilan, ekipirovka narxlari so‘mda ko‘rsatilgan. Kuzgi taklif mototsikllar tugaguncha amal qiladi. Texnik ma’lumotlar Ducati ma’lumotlariga ko‘ra. Rasmlar illyustrativ xarakterga ega.",
   year:"model yili"},
- en:{gcats:{all:"All",helmets:"Helmets",jackets:"Jackets",suits:"Leather suits",pants:"Trousers & jeans",boots:"Footwear",gloves:"Gloves",mx:"Off-Road"},gtags:{leather:"Leather",textile:"Textile",perf:"Perforated",lady:"Women's",men:"Men's",gtx:"GORE-TEX",wp:"Waterproof",ece:"ECE 22.06"},cur:"UZS",sizeL:"Size",sizesAsk:"Ask our manager about available sizes",art:"Item no.",msgItem:"Hello! I'm interested in {b} (item no. {a}) from your catalogue.",gearOff:"off apparel",kicker:"Tashkent City · Autumn prices",h1a:"Ducati",h1b:"in stock",
+ en:{ofam:{all:"All",panigale:"Panigale",streetfighter:"Streetfighter",monster:"Monster",multistrada:"Multistrada",desertx:"DesertX",diavel:"Diavel / XDiavel",hypermotard:"Hypermotard",scrambler:"Scrambler",offroad:"Off-Road",centenario:"Centenario"},order:"Order",vatIncl:"incl. VAT · to order",msgOrd:"Hello! I'd like to order {b}. Catalogue price: {p}.",gcats:{all:"All",helmets:"Helmets",jackets:"Jackets",suits:"Leather suits",pants:"Trousers & jeans",boots:"Footwear",gloves:"Gloves",mx:"Off-Road"},gtags:{leather:"Leather",textile:"Textile",perf:"Perforated",lady:"Women's",men:"Men's",gtx:"GORE-TEX",wp:"Waterproof",ece:"ECE 22.06"},cur:"UZS",sizeL:"Size",sizesAsk:"Ask our manager about available sizes",art:"Item no.",msgItem:"Hello! I'm interested in {b} (item no. {a}) from your catalogue.",gearOff:"off apparel",kicker:"Tashkent City · Autumn prices",h1a:"Ducati",h1b:"in stock",
   sub:"Up to {n}% off motorcycles in our showroom. Choose your Ducati and ride it home today.",
   sBikes:"bikes in stock",sOff:"autumn offer",sHours:"showroom hours",
   tStock:"In stock",tOrder:"To order",tGear:"Apparel",
@@ -915,7 +1833,7 @@ const T = {
   wantTg:"Message on Telegram",call:"Call",test:"Test ride",reserve:"Reserve",
   msgBike:"Hello! I'm interested in {b} from your catalogue.",msgTestd:"Hello! I'd like to book a test ride on {b}.",msgRes:"Hello! I'd like to reserve {b}.",msgOrder:"Hello! I'd like a quote and delivery time for a Ducati to order.",msgGear:"Hello! I'd like to ask about apparel availability.",priceL:"Price",
   oKick:"Ducati · Scrambler",oTitle:"Any Ducati, made to order",
-  oText:"The full Ducati and Scrambler range, delivered from the factory. Order prices will appear here soon — meanwhile our manager will quote the price and delivery time.",
+  oText:"The full 2027 Ducati range, delivered from the factory. Tap «Show price» to see the cost; our manager will confirm delivery time.",
   oCta:"Get an order quote",showPrice:"Show price",soon:"Prices coming soon",lead:"Delivery time",
   gKick:"Ducati Apparel",gTitle:"Ducati apparel",
   gText:"Genuine Ducati apparel in stock at our showroom. All apparel is now 15% off.",
@@ -990,16 +1908,39 @@ function renderStock(){
   $("#grid").innerHTML = list.map(card).join("");
 }
 
+let OSEG = "all"; const REV = new Set();
+function orderCard(o, i){
+  const media = o.img ? `<img src="${o.img}" alt="${esc(o.name)}" loading="lazy">`
+    : `<span class="bar"></span><span class="ghost">${o.ghost}</span>`;
+  const label = o.name + (o.trim ? " " + o.trim : "") + (o.color ? " (" + o.color + ")" : "");
+  const shown = REV.has(o.id);
+  const right = shown
+    ? `<div class="shown">${money(o.price)}<small>${t("vatIncl")}</small></div><a class="obuy" href="${tgLink(t("msgOrd").replace("{b}", label).replace("{p}", money(o.price)))}" target="_blank" rel="noopener">${ICON_TG}${t("order")}</a>`
+    : `<button class="reveal" data-o="${o.id}">${t("showPrice")}</button>`;
+  return `<div class="card ocard" style="--c:${o.hex};animation-delay:${Math.min(i,12)*40}ms">
+    <div class="vis ${o.img?"has-img":""}" style="--c:${o.hex}">${media}</div>
+    <div class="body">
+      <div class="meta">${o.color?esc(o.color):t("ofam")[o.fam]} · 2027</div>
+      <h3>${esc(o.name)}</h3>
+      ${o.trim?`<div class="ed">${esc(o.trim)}</div>`:""}
+      <div class="oprice">${right}</div>
+    </div></div>`;
+}
 function renderOrder(){
-  if (ORDER.length){
-    $("#orderList").innerHTML = `<div class="grid">${ORDER.map((o,i)=>`
-      <div class="card" style="--c:#CC0000;animation-delay:${i*50}ms">
-        <div class="body"><div class="meta">${esc(o.family)}</div><h3>${esc(o.name)}</h3>
-        ${o.leadTime?`<div class="ed">${t("lead")}: ${esc(o.leadTime[L])}</div>`:""}
-        <button class="reveal" data-price="${o.price}">${t("showPrice")}</button></div></div>`).join("")}</div>`;
-  } else {
+  const order = ["panigale","streetfighter","monster","multistrada","desertx","diavel","hypermotard","scrambler","offroad","centenario"];
+  const fams = ["all", ...order.filter(f => ORDER.some(o => o.fam === f))];
+  $("#ochips").style.display = ORDER.length ? "" : "none";
+  $("#ochips").innerHTML = fams.map(f => {
+    const n = f === "all" ? ORDER.length : ORDER.filter(o => o.fam === f).length;
+    return `<button class="chip ${f===OSEG?"on":""}" data-os="${f}">${t("ofam")[f]}<span>${n}</span></button>`;
+  }).join("");
+  if (!ORDER.length){
     $("#orderList").innerHTML = `<div class="fam">${FAMILIES.map(f=>`<div><b>${f.toUpperCase()}</b><span>${t("soon")}</span></div>`).join("")}</div>`;
+    return;
   }
+  const list = ORDER.filter(o => OSEG === "all" || o.fam === OSEG)
+    .sort((a,b) => order.indexOf(a.fam) - order.indexOf(b.fam));
+  $("#orderList").innerHTML = `<div class="grid">${list.map(orderCard).join("")}</div>`;
 }
 let GSEG = "all";
 const sum = v => v.toLocaleString("en-US").replace(/,/g, "\u202F");
@@ -1100,6 +2041,7 @@ function applyLang(){
   $("#sCount").textContent = STOCK.length;
   $("#tCount").textContent = STOCK.length;
   $("#gCount").textContent = GEAR.length || "";
+  $("#oCount").textContent = ORDER.length || "";
   document.title = "Ducati Uzbekistan — " + t("tStock");
   renderStock(); renderOrder(); renderGear();
   $("#lnkOrder").href = tgLink(t("msgOrder"));
@@ -1115,7 +2057,8 @@ function route(){
 document.addEventListener("click", e => {
   const l = e.target.closest("#lang button"); if (l){ L = l.dataset.l; try{localStorage.setItem("dl",L)}catch(_){} applyLang(); return; }
   const c = e.target.closest(".chip[data-s]"); if (c){ SEG = c.dataset.s; renderStock(); return; }
-  const r = e.target.closest(".reveal"); if (r && !r.classList.contains("shown")){ r.textContent = money(+r.dataset.price); r.classList.add("shown"); return; }
+  const os = e.target.closest(".chip[data-os]"); if (os){ OSEG = os.dataset.os; renderOrder(); return; }
+  const r = e.target.closest(".reveal[data-o]"); if (r){ REV.add(r.dataset.o); const o = ORDER.find(x => x.id === r.dataset.o); const card = r.closest(".ocard"); card.outerHTML = orderCard(o, 0); return; }
   const k = e.target.closest(".card[data-id]"); if (k){ openSheet(k.dataset.id); return; }
   const gs = e.target.closest(".chip[data-gs]"); if (gs){ GSEG = gs.dataset.gs; renderGear(); return; }
   const gc = e.target.closest(".gcard[data-g]"); if (gc){ openGear(gc.dataset.g); return; }

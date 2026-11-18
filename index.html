@@ -153,6 +153,30 @@ html[lang="ru"] .intro h2{font-family:'Montserrat',sans-serif;font-weight:800;le
 .btn.ghostb:hover{border-color:#fff}
 .btn svg{flex:none}
 
+/* ---------- gear ---------- */
+.ggrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+@media(min-width:700px){.ggrid{grid-template-columns:repeat(3,1fr);gap:16px}}
+@media(min-width:1100px){.ggrid{grid-template-columns:repeat(4,1fr)}}
+.gcard{background:var(--ink);border:1px solid var(--line);text-align:left;display:flex;flex-direction:column;opacity:0;animation:rise .6s var(--ease) forwards;transition:border-color .3s}
+.gcard:hover{border-color:#444}
+.gimg{position:relative;aspect-ratio:1;background:#fff;overflow:hidden}
+.gimg img{width:100%;height:100%;object-fit:contain;padding:8%;transition:transform .8s var(--ease)}
+.gcard:hover .gimg img{transform:scale(1.05)}
+.gimg .off{position:absolute;left:0;top:0;font-size:12px;padding:4px 7px}
+.gimg .noph{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(160deg,#1b1b1b,#0c0c0c);font-family:'DSX',sans-serif;font-weight:700;font-size:22px;letter-spacing:.06em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.3)}
+.gb{padding:12px 12px 14px;display:flex;flex-direction:column;flex:1}
+.gcat{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dg)}
+.gname{font-family:'DS','Montserrat',sans-serif;font-weight:700;font-size:14px;line-height:1.25;margin:6px 0 10px;text-transform:uppercase;letter-spacing:.01em}
+.gp{margin-top:auto}
+.gp .was{display:block;font-family:'DS',sans-serif;font-size:11.5px;color:var(--dg);text-decoration:line-through}
+.gp .now{display:block;font-family:'DSX',sans-serif;font-weight:700;font-size:16px;margin-top:2px}
+.gp .now small{font-family:'DS','Montserrat',sans-serif;font-weight:400;font-size:11px;color:var(--fg);margin-left:3px}
+.gp .req{font-size:13px;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tags span{border:1px solid var(--line);padding:5px 9px;font-size:11px;letter-spacing:.06em;color:var(--lg)}
+.sheet .gimg{aspect-ratio:1/1;max-height:62vh;margin:0 auto}
+.sheet .gimg img{padding:6%}
+
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--line);background:var(--ink)}
 footer .wrap{padding-top:44px;padding-bottom:44px;display:grid;gap:30px}
@@ -228,7 +252,7 @@ body.lock{overflow:hidden}
   <div class="wrap">
     <a class="tab" href="#stock" data-v="stock"><span data-t="tStock"></span><sup id="tCount"></sup></a>
     <a class="tab" href="#order" data-v="order"><span data-t="tOrder"></span></a>
-    <a class="tab" href="#gear" data-v="gear"><span data-t="tGear"></span></a>
+    <a class="tab" href="#gear" data-v="gear"><span data-t="tGear"></span><sup id="gCount"></sup></a>
   </div>
 </nav>
 
@@ -254,6 +278,8 @@ body.lock{overflow:hidden}
       <h2 data-t="gTitle" style="margin-top:14px"></h2>
       <p data-t="gText"></p>
     </div>
+    <div class="chips" id="gchips"></div>
+    <div class="ggrid" id="ggrid"></div>
     <div class="fam" id="gearCats"></div>
     <div style="margin-top:22px"><a class="btn red" id="lnkGear" href="https://t.me/ducatiuz_sales" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1.1-1 .2-1.5L20.5 2.8c.9-.3 1.6.2 1.4 1.5z"/></svg><span data-t="gCta"></span></a></div>
   </section>
@@ -441,8 +467,388 @@ const STOCK = [
 
 // Под заказ: { family, name, segment, price, leadTime: {ru,uz,en} }
 const ORDER = [];
-// Экипировка
-const GEAR = [];
+// Экипировка: цена — розничная, sale — со скидкой 15%. Суммы в сумах.
+const GEAR = [
+ {
+  "id": "981085250",
+  "cat": "jackets",
+  "name": "Black Rider C2 Jacket",
+  "art": "981085250",
+  "tags": [
+   "leather"
+  ],
+  "size": "50",
+  "price": 11839000,
+  "sale": 10063150,
+  "img": "img/gear/981085250.jpg"
+ },
+ {
+  "id": "981074448",
+  "cat": "jackets",
+  "name": "Ducati Corse C6 Perforated Leather Jacket",
+  "art": "981074448",
+  "tags": [
+   "leather",
+   "perf"
+  ],
+  "size": null,
+  "price": 14188909,
+  "sale": 12060573,
+  "img": "img/gear/981074448.jpg"
+ },
+ {
+  "id": "981075158",
+  "cat": "jackets",
+  "name": "Company C4 Leather Jacket",
+  "art": "981075158",
+  "tags": [
+   "leather"
+  ],
+  "size": null,
+  "price": 8330698,
+  "sale": 7081093,
+  "img": "img/gear/981075158.jpg"
+ },
+ {
+  "id": "981074756",
+  "cat": "jackets",
+  "name": "Ducati Corse Fighter C2 Jacket",
+  "art": "981074756",
+  "tags": [],
+  "size": null,
+  "price": 10392471,
+  "sale": 8833600,
+  "img": "img/gear/981074756.jpg"
+ },
+ {
+  "id": "981075244",
+  "cat": "jackets",
+  "name": "Company C4 Lady Leather Jacket",
+  "art": "981075244",
+  "tags": [
+   "leather",
+   "lady"
+  ],
+  "size": null,
+  "price": 8173679,
+  "sale": 6947627,
+  "img": "img/gear/981075244.jpg"
+ },
+ {
+  "id": "981073548",
+  "cat": "jackets",
+  "name": "Ducati Corse Summer C3 Jacket",
+  "art": "981073548",
+  "tags": [
+   "textile",
+   "men"
+  ],
+  "size": null,
+  "price": 7667367,
+  "sale": 6517262,
+  "img": "img/gear/981073548.jpg"
+ },
+ {
+  "id": "981092604",
+  "cat": "jackets",
+  "name": "Overlay P01 2.0 Jacket",
+  "art": "981092604",
+  "tags": [
+   "men"
+  ],
+  "size": null,
+  "price": 3713000,
+  "sale": 3156050,
+  "img": "img/gear/981092604.jpg"
+ },
+ {
+  "id": "981092525",
+  "cat": "jackets",
+  "name": "Speed Air C2 2.0 Jacket",
+  "art": "981092525",
+  "tags": [
+   "textile"
+  ],
+  "size": null,
+  "price": 4185765,
+  "sale": 3557900,
+  "img": "img/gear/981092525.jpg"
+ },
+ {
+  "id": "981074050",
+  "cat": "suits",
+  "name": "Ducati Corse C6 Leather Suit",
+  "art": "981074050",
+  "tags": [
+   "leather"
+  ],
+  "size": null,
+  "price": 31721218,
+  "sale": 26963035,
+  "img": "img/gear/981074050.jpg"
+ },
+ {
+  "id": "981085952",
+  "cat": "suits",
+  "name": "Ducati Corse K3 Perforated Leather Suit",
+  "art": "981085952",
+  "tags": [
+   "leather",
+   "perf"
+  ],
+  "size": null,
+  "price": 45616546,
+  "sale": 38774064,
+  "img": "img/gear/981085952.jpg"
+ },
+ {
+  "id": "981092686",
+  "cat": "pants",
+  "name": "Tour C5 Trousers",
+  "art": "981092686",
+  "tags": [
+   "textile",
+   "men"
+  ],
+  "size": null,
+  "price": 6682693,
+  "sale": 5680289,
+  "img": "img/gear/981092686.jpg"
+ },
+ {
+  "id": "981093958",
+  "cat": "pants",
+  "name": "Company C4 2.0 Leather Trousers",
+  "art": "981093958",
+  "tags": [
+   "leather"
+  ],
+  "size": null,
+  "price": 7894610,
+  "sale": 6710418,
+  "img": "img/gear/981093958.jpg"
+ },
+ {
+  "id": "981093738",
+  "cat": "pants",
+  "name": "City C1 Jeans",
+  "art": "981093738",
+  "tags": [
+   "men"
+  ],
+  "size": null,
+  "price": 4282505,
+  "sale": 3640129,
+  "img": "img/gear/981093738.jpg"
+ },
+ {
+  "id": "981076428",
+  "cat": "pants",
+  "name": "Company C4 Lady Jeans",
+  "art": "981076428",
+  "tags": [
+   "lady"
+  ],
+  "size": null,
+  "price": 4308650,
+  "sale": 3662352,
+  "img": "img/gear/981076428.jpg"
+ },
+ {
+  "id": "981076138",
+  "cat": "pants",
+  "name": "Downtown C1 Trousers",
+  "art": "981076138",
+  "tags": [
+   "men"
+  ],
+  "size": null,
+  "price": 3762803,
+  "sale": 3198383,
+  "img": "img/gear/981076138.jpg"
+ },
+ {
+  "id": "981076043",
+  "cat": "boots",
+  "name": "Theme C2 Boots",
+  "art": "981076043",
+  "tags": [],
+  "size": null,
+  "price": 4255533,
+  "sale": 3617203,
+  "img": "img/gear/981076043.jpg"
+ },
+ {
+  "id": "981073842",
+  "cat": "boots",
+  "name": "Strada C2 Boots",
+  "art": "981073842",
+  "tags": [],
+  "size": null,
+  "price": 6366792,
+  "sale": 5411773,
+  "img": "img/gear/981073842.jpg"
+ },
+ {
+  "id": "981085543",
+  "cat": "boots",
+  "name": "Speed Evo WP V2 Boots",
+  "art": "981085543",
+  "tags": [
+   "wp"
+  ],
+  "size": null,
+  "price": 9018049,
+  "sale": 7665342,
+  "img": "img/gear/981085543.jpg"
+ },
+ {
+  "id": "981085645",
+  "cat": "boots",
+  "name": "Company C4 GTX Boots",
+  "art": "981085645",
+  "tags": [
+   "gtx"
+  ],
+  "size": null,
+  "price": 5331873,
+  "sale": 4532092,
+  "img": "img/gear/981085645.jpg"
+ },
+ {
+  "id": "981075741",
+  "cat": "boots",
+  "name": "Downtown C2 Shoes",
+  "art": "981075741",
+  "tags": [],
+  "size": null,
+  "price": 4032950,
+  "sale": 3428008,
+  "img": "img/gear/981075741.jpg"
+ },
+ {
+  "id": "981088075",
+  "cat": "helmets",
+  "name": "Horizon V3 Helmet",
+  "art": "981088075",
+  "tags": [
+   "ece"
+  ],
+  "size": null,
+  "price": 11465785,
+  "sale": 9745917,
+  "img": "img/gear/981088075.jpg"
+ },
+ {
+  "id": "981088416",
+  "cat": "helmets",
+  "name": "Speed Evo 2 Helmet",
+  "art": "981088416",
+  "tags": [
+   "ece"
+  ],
+  "size": null,
+  "price": 15820000,
+  "sale": 13447000,
+  "img": "img/gear/981088416.jpg"
+ },
+ {
+  "id": "981088325",
+  "cat": "helmets",
+  "name": "Ducati Logo Helmet",
+  "art": "981088325",
+  "tags": [
+   "ece"
+  ],
+  "size": null,
+  "price": 7650000,
+  "sale": 6502500,
+  "img": ""
+ },
+ {
+  "id": "981071937",
+  "cat": "boots",
+  "name": "Ducati Corse City C2 Shoes",
+  "art": "981071937",
+  "tags": [],
+  "size": null,
+  "price": 4330822,
+  "sale": 3681199,
+  "img": "img/gear/981071937.jpg"
+ },
+ {
+  "id": "981088044",
+  "cat": "gloves",
+  "name": "Tour C5 2in1 GTX Gloves",
+  "art": "981088044",
+  "tags": [
+   "gtx"
+  ],
+  "size": null,
+  "price": 4296000,
+  "sale": 3651600,
+  "img": "img/gear/981088044.jpg"
+ },
+ {
+  "id": "981088573",
+  "cat": "gloves",
+  "name": "Ducati Corse C6 Gloves",
+  "art": "981088573",
+  "tags": [
+   "leather"
+  ],
+  "size": null,
+  "price": 7639061,
+  "sale": 6493202,
+  "img": "img/gear/981088573.jpg"
+ },
+ {
+  "id": "981077075",
+  "cat": "gloves",
+  "name": "Performance C3 Gloves",
+  "art": "981077075",
+  "tags": [
+   "leather"
+  ],
+  "size": "L",
+  "price": 3087491,
+  "sale": 2624367,
+  "img": "img/gear/981077075.jpg"
+ },
+ {
+  "id": "981092276",
+  "cat": "mx",
+  "name": "Desmo MX Vest",
+  "art": "981092276",
+  "tags": [],
+  "size": "XL",
+  "price": 2450809,
+  "sale": 2083188,
+  "img": "img/gear/981092276.jpg"
+ },
+ {
+  "id": "981095706",
+  "cat": "mx",
+  "name": "Desmo MX Jersey",
+  "art": "981095706",
+  "tags": [],
+  "size": "XL",
+  "price": 1352124,
+  "sale": 1149305,
+  "img": "img/gear/981095706.jpg"
+ },
+ {
+  "id": "981091434",
+  "cat": "mx",
+  "name": "Desmo MX Trousers",
+  "art": "981091434",
+  "tags": [],
+  "size": null,
+  "price": null,
+  "sale": null,
+  "img": "img/gear/981091434.jpg"
+ }
+];
 
 </script>
 <script>
@@ -453,7 +859,7 @@ const ICON_PH = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" str
 const ICON_AR = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
 const T = {
- ru:{kicker:"Tashkent City · Осенние цены",h1a:"Ducati",h1b:"в наличии",
+ ru:{gcats:{all:"Все",helmets:"Шлемы",jackets:"Куртки",suits:"Комбинезоны",pants:"Брюки и джинсы",boots:"Обувь",gloves:"Перчатки",mx:"Off-Road"},gtags:{leather:"Кожа",textile:"Текстиль",perf:"Перфорация",lady:"Женская модель",men:"Мужская модель",gtx:"GORE-TEX",wp:"Водонепроницаемые",ece:"ECE 22.06"},cur:"сум",sizeL:"Размер",sizesAsk:"Наличие размеров уточняйте у менеджера",art:"Артикул",msgItem:"Здравствуйте! Интересует {b} (арт. {a}) из каталога.",gearOff:"скидка на экипировку",kicker:"Tashkent City · Осенние цены",h1a:"Ducati",h1b:"в наличии",
   sub:"Скидки до {n}% на мотоциклы в салоне. Выберите свой Ducati и заберите уже сегодня.",
   sBikes:"байков в наличии",sOff:"осенняя скидка",sHours:"ждём в салоне",
   tStock:"В наличии",tOrder:"Под заказ",tGear:"Экипировка",
@@ -467,15 +873,15 @@ const T = {
   oKick:"Ducati · Scrambler",oTitle:"Любой Ducati под заказ",
   oText:"Вся линейка Ducati и Scrambler с поставкой с завода. Прайс на заказ скоро появится здесь, а пока менеджер рассчитает стоимость и сроки поставки.",
   oCta:"Узнать цену под заказ",showPrice:"Показать цену",soon:"Прайс скоро",lead:"Срок поставки",
-  gKick:"Ducati Apparel",gTitle:"Экипировка и мерч",
-  gText:"Шлемы, куртки, перчатки, ботинки и мерч Ducati. Каталог с ценами и размерами появится совсем скоро. Спросите менеджера о наличии уже сейчас.",
+  gKick:"Ducati Apparel",gTitle:"Экипировка Ducati",
+  gText:"Оригинальная экипировка Ducati в наличии в салоне. Сейчас на всю экипировку действует скидка 15%.",
   gCta:"Спросить о наличии",
   cats:[["Шлемы","Helmets"],["Куртки","Jackets"],["Перчатки","Gloves"],["Ботинки","Boots"],["Мерч","Merch"]],
   fShow:"Шоурум",fContact:"Связаться",fCat:"Каталог",
   addr:"Ташкент, Шайхантахурский р-н, ул. Заргар, 4",hours:"Часы работы: 10:00–20:00",map:"Открыть на карте →",
-  fine:"Цены указаны в долларах США с НДС. Осеннее предложение действует до окончания стока. Характеристики указаны по данным Ducati. Изображения носят иллюстративный характер.",
+  fine:"Цены на мотоциклы указаны в долларах США с НДС, на экипировку в сумах. Осеннее предложение действует до окончания стока. Характеристики указаны по данным Ducati. Изображения носят иллюстративный характер.",
   year:"модельный год"},
- uz:{kicker:"Tashkent City · Kuzgi narxlar",h1a:"Ducati",h1b:"mavjud",
+ uz:{gcats:{all:"Barchasi",helmets:"Dubulg‘alar",jackets:"Kurtkalar",suits:"Kombinezonlar",pants:"Shim va jinsilar",boots:"Poyabzal",gloves:"Qo‘lqoplar",mx:"Off-Road"},gtags:{leather:"Charm",textile:"Tekstil",perf:"Perforatsiya",lady:"Ayollar modeli",men:"Erkaklar modeli",gtx:"GORE-TEX",wp:"Suv o‘tkazmaydi",ece:"ECE 22.06"},cur:"so‘m",sizeL:"O‘lcham",sizesAsk:"O‘lchamlar mavjudligini menejerdan so‘rang",art:"Artikul",msgItem:"Assalomu alaykum! Katalogdagi {b} (art. {a}) qiziqtiradi.",gearOff:"ekipirovkaga chegirma",kicker:"Tashkent City · Kuzgi narxlar",h1a:"Ducati",h1b:"mavjud",
   sub:"Salonimizdagi mototsikllarga {n}% gacha chegirma. O‘z Ducati’ingizni tanlang va bugunoq olib keting.",
   sBikes:"ta mototsikl mavjud",sOff:"kuzgi chegirma",sHours:"salonda kutamiz",
   tStock:"Mavjud",tOrder:"Buyurtmaga",tGear:"Ekipirovka",
@@ -489,15 +895,15 @@ const T = {
   oKick:"Ducati · Scrambler",oTitle:"Istalgan Ducati buyurtmaga",
   oText:"Ducati va Scrambler’ning butun modellar qatori zavoddan yetkaziladi. Buyurtma narxlari tez orada shu yerda paydo bo‘ladi, hozircha menejer narx va yetkazish muddatini hisoblab beradi.",
   oCta:"Buyurtma narxini bilish",showPrice:"Narxni ko‘rsatish",soon:"Narxlar tez orada",lead:"Yetkazish muddati",
-  gKick:"Ducati Apparel",gTitle:"Ekipirovka va merch",
-  gText:"Ducati dubulg‘alari, kurtkalari, qo‘lqoplari, botinkalari va merchi. Narx va o‘lchamlar bilan katalog tez orada. Mavjudligini hoziroq menejerdan so‘rang.",
+  gKick:"Ducati Apparel",gTitle:"Ducati ekipirovkasi",
+  gText:"Salonda mavjud original Ducati ekipirovkasi. Hozir barcha ekipirovkaga 15% chegirma.",
   gCta:"Mavjudligini so‘rash",
   cats:[["Dubulg‘alar","Helmets"],["Kurtkalar","Jackets"],["Qo‘lqoplar","Gloves"],["Botinkalar","Boots"],["Merch","Merch"]],
   fShow:"Shourum",fContact:"Bog‘lanish",fCat:"Katalog",
   addr:"Toshkent, Shayxontohur tumani, Zargar ko‘chasi, 4",hours:"Ish vaqti: 10:00–20:00",map:"Xaritada ochish →",
-  fine:"Narxlar AQSh dollarida, QQS bilan ko‘rsatilgan. Kuzgi taklif mototsikllar tugaguncha amal qiladi. Texnik ma’lumotlar Ducati ma’lumotlariga ko‘ra. Rasmlar illyustrativ xarakterga ega.",
+  fine:"Mototsikl narxlari AQSh dollarida QQS bilan, ekipirovka narxlari so‘mda ko‘rsatilgan. Kuzgi taklif mototsikllar tugaguncha amal qiladi. Texnik ma’lumotlar Ducati ma’lumotlariga ko‘ra. Rasmlar illyustrativ xarakterga ega.",
   year:"model yili"},
- en:{kicker:"Tashkent City · Autumn prices",h1a:"Ducati",h1b:"in stock",
+ en:{gcats:{all:"All",helmets:"Helmets",jackets:"Jackets",suits:"Leather suits",pants:"Trousers & jeans",boots:"Footwear",gloves:"Gloves",mx:"Off-Road"},gtags:{leather:"Leather",textile:"Textile",perf:"Perforated",lady:"Women's",men:"Men's",gtx:"GORE-TEX",wp:"Waterproof",ece:"ECE 22.06"},cur:"UZS",sizeL:"Size",sizesAsk:"Ask our manager about available sizes",art:"Item no.",msgItem:"Hello! I'm interested in {b} (item no. {a}) from your catalogue.",gearOff:"off apparel",kicker:"Tashkent City · Autumn prices",h1a:"Ducati",h1b:"in stock",
   sub:"Up to {n}% off motorcycles in our showroom. Choose your Ducati and ride it home today.",
   sBikes:"bikes in stock",sOff:"autumn offer",sHours:"showroom hours",
   tStock:"In stock",tOrder:"To order",tGear:"Apparel",
@@ -511,13 +917,13 @@ const T = {
   oKick:"Ducati · Scrambler",oTitle:"Any Ducati, made to order",
   oText:"The full Ducati and Scrambler range, delivered from the factory. Order prices will appear here soon — meanwhile our manager will quote the price and delivery time.",
   oCta:"Get an order quote",showPrice:"Show price",soon:"Prices coming soon",lead:"Delivery time",
-  gKick:"Ducati Apparel",gTitle:"Apparel & merch",
-  gText:"Ducati helmets, jackets, gloves, boots and merchandise. A catalogue with prices and sizes is coming soon — ask our manager about availability now.",
+  gKick:"Ducati Apparel",gTitle:"Ducati apparel",
+  gText:"Genuine Ducati apparel in stock at our showroom. All apparel is now 15% off.",
   gCta:"Ask about availability",
   cats:[["Helmets","Helmets"],["Jackets","Jackets"],["Gloves","Gloves"],["Boots","Boots"],["Merch","Merch"]],
   fShow:"Showroom",fContact:"Contact",fCat:"Catalogue",
   addr:"Tashkent, Shaykhantakhur district, 4 Zargar street",hours:"Opening hours: 10:00–20:00",map:"Open in maps →",
-  fine:"Prices in US dollars, VAT included. Autumn offer valid while stock lasts. Specifications according to Ducati. Images are for illustration purposes.",
+  fine:"Motorcycle prices in US dollars incl. VAT; apparel prices in UZS. Autumn offer valid while stock lasts. Specifications according to Ducati. Images are for illustration purposes.",
   year:"model year"}
 };
 const FAMILIES = ["Panigale","Streetfighter","Monster","Multistrada","DesertX","Diavel","XDiavel","Hypermotard","Scrambler","Off-Road"];
@@ -595,8 +1001,61 @@ function renderOrder(){
     $("#orderList").innerHTML = `<div class="fam">${FAMILIES.map(f=>`<div><b>${f.toUpperCase()}</b><span>${t("soon")}</span></div>`).join("")}</div>`;
   }
 }
+let GSEG = "all";
+const sum = v => v.toLocaleString("en-US").replace(/,/g, "\u202F");
+const goff = g => g.price && g.sale ? Math.round((1 - g.sale / g.price) * 100) : 0;
+function gearCard(g, i){
+  const img = g.img ? `<img src="${g.img}" alt="${esc(g.name)}" loading="lazy">` : `<div class="noph">DUCATI</div>`;
+  const price = g.sale
+    ? `<span class="was">${sum(g.price)}</span><span class="now">${sum(g.sale)}<small>${t("cur")}</small></span>`
+    : `<span class="req">${t("req")}</span>`;
+  return `<button class="gcard" style="animation-delay:${Math.min(i,12)*40}ms" data-g="${g.id}">
+    <div class="gimg">${img}${goff(g)?`<span class="off">−${goff(g)}%</span>`:""}</div>
+    <div class="gb"><div class="gcat">${t("gcats")[g.cat]}</div><div class="gname">${esc(g.name)}</div>
+    <div class="gp">${price}</div></div></button>`;
+}
 function renderGear(){
-  $("#gearCats").innerHTML = t("cats").map(c=>`<div><b>${c[1].toUpperCase()}</b><span>${esc(c[0])}</span></div>`).join("");
+  const has = GEAR.length > 0;
+  $("#gearCats").style.display = has ? "none" : "";
+  $("#gchips").style.display = has ? "" : "none";
+  if (!has){
+    $("#gearCats").innerHTML = t("cats").map(c=>`<div><b>${c[1].toUpperCase()}</b><span>${esc(c[0])}</span></div>`).join("");
+    return;
+  }
+  const order = ["helmets","jackets","suits","pants","boots","gloves","mx"];
+  const cats = ["all", ...order.filter(c => GEAR.some(g => g.cat === c))];
+  $("#gchips").innerHTML = cats.map(c => {
+    const n = c === "all" ? GEAR.length : GEAR.filter(g => g.cat === c).length;
+    return `<button class="chip ${c===GSEG?"on":""}" data-gs="${c}">${t("gcats")[c]}<span>${n}</span></button>`;
+  }).join("");
+  const list = GEAR.filter(g => GSEG === "all" || g.cat === GSEG)
+    .sort((a,b) => order.indexOf(a.cat) - order.indexOf(b.cat));
+  $("#ggrid").innerHTML = list.map(gearCard).join("");
+}
+function openGear(id){
+  const g = GEAR.find(x => x.id === id); if (!g) return;
+  const img = g.img ? `<img src="${g.img}" alt="${esc(g.name)}">` : `<div class="noph">DUCATI</div>`;
+  const price = g.sale
+    ? `<div><span class="was">${sum(g.price)} ${t("cur")}</span><span class="now">${sum(g.sale)}<small style="font-size:14px;margin-left:6px;font-family:'DS','Montserrat',sans-serif;font-weight:400;color:var(--fg)">${t("cur")}</small></span></div><span class="save">${t("save").replace("{v}", sum(g.price - g.sale) + " " + t("cur"))}</span>`
+    : `<div><span class="now" style="font-size:22px">${t("req")}</span></div>`;
+  const tags = g.tags.map(k => `<span>${t("gtags")[k]}</span>`).join("");
+  const msg = t("msgItem").replace("{b}", g.name + (g.size ? ", " + t("sizeL").toLowerCase() + " " + g.size : "")).replace("{a}", g.art)
+    + (g.sale ? " " + t("priceL") + ": " + sum(g.sale) + " " + t("cur") + "." : "");
+  $("#sheetBody").innerHTML = `<div class="gimg">${img}${goff(g)?`<span class="off">−${goff(g)}%</span>`:""}</div>
+    <div class="in">
+      <div class="meta">${t("gcats")[g.cat]} · ${t("art")} ${g.art}</div>
+      <h2 style="font-size:clamp(24px,7vw,32px)">${esc(g.name)}</h2>
+      ${tags ? `<div class="tags">${tags}</div>` : ""}
+      <p class="tl">${g.size ? `${t("sizeL")}: <b>${g.size}</b>` : t("sizesAsk")}</p>
+      <div class="pbox" style="margin-top:20px;flex-direction:column;align-items:flex-start;gap:12px">${price}</div>
+      <div class="ctas">
+        <a class="btn red" href="${tgLink(msg)}" target="_blank" rel="noopener">${ICON_TG}${t("wantTg")}</a>
+        <a class="btn ghostb" href="${PHONE_HREF}">${ICON_PH}${t("call")}</a>
+      </div>
+      <div class="phone">${PHONE} · @ducatiuz_sales</div>
+    </div>`;
+  $("#sheet").classList.add("on"); $("#sheet").setAttribute("aria-hidden","false");
+  document.body.classList.add("lock"); $("#sheet .pn").scrollTop = 0;
 }
 
 function openSheet(id){
@@ -640,6 +1099,7 @@ function applyLang(){
   $("#sMax").textContent = "−" + max + "%";
   $("#sCount").textContent = STOCK.length;
   $("#tCount").textContent = STOCK.length;
+  $("#gCount").textContent = GEAR.length || "";
   document.title = "Ducati Uzbekistan — " + t("tStock");
   renderStock(); renderOrder(); renderGear();
   $("#lnkOrder").href = tgLink(t("msgOrder"));
@@ -654,9 +1114,11 @@ function route(){
 
 document.addEventListener("click", e => {
   const l = e.target.closest("#lang button"); if (l){ L = l.dataset.l; try{localStorage.setItem("dl",L)}catch(_){} applyLang(); return; }
-  const c = e.target.closest(".chip"); if (c){ SEG = c.dataset.s; renderStock(); return; }
+  const c = e.target.closest(".chip[data-s]"); if (c){ SEG = c.dataset.s; renderStock(); return; }
   const r = e.target.closest(".reveal"); if (r && !r.classList.contains("shown")){ r.textContent = money(+r.dataset.price); r.classList.add("shown"); return; }
   const k = e.target.closest(".card[data-id]"); if (k){ openSheet(k.dataset.id); return; }
+  const gs = e.target.closest(".chip[data-gs]"); if (gs){ GSEG = gs.dataset.gs; renderGear(); return; }
+  const gc = e.target.closest(".gcard[data-g]"); if (gc){ openGear(gc.dataset.g); return; }
   if (e.target.closest("[data-close]")) closeSheet();
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
